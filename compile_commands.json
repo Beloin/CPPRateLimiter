@@ -1,0 +1,16 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/c++",
+      "-I/home/beloin/Documents/system_designs/rate_limiter/./include",
+      "-g",
+      "-c",
+      "-o",
+      "CMakeFiles/rate_limiter.dir/main.cpp.o",
+      "/home/beloin/Documents/system_designs/rate_limiter/main.cpp"
+    ],
+    "directory": "/home/beloin/Documents/system_designs/rate_limiter/build",
+    "file": "/home/beloin/Documents/system_designs/rate_limiter/main.cpp",
+    "output": "/home/beloin/Documents/system_designs/rate_limiter/build/CMakeFiles/rate_limiter.dir/main.cpp.o"
+  }
+]
