@@ -7,7 +7,8 @@
       "type": "codelldb",
       "program": "./build/rate_limiter",
       "pipeline": [
-        "cmake -S . -O build -DCMAKE_BUILD_TYPE=Debug",
+        "cmake -S . -O build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=1",
+        "ln -s ./build/compile_commands.json ./compile_commands.json",
         "cd build && make"
       ],
       "args": [
@@ -15,6 +16,15 @@
         "8090"
       ],
       "env": {}
+    }
+  ],
+  "tasks": [
+    {
+      "name": "Build compile_commands.json",
+      "pipeline": [
+        "cmake -S . -O build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=1",
+        "ln -s ./build/compile_commands.json ./compile_commands.json"
+      ]
     }
   ]
 }

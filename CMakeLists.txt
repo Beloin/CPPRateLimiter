@@ -1,9 +1,4 @@
-cmake_minimum_required(VERSION 3.31)
-
-foreach(lib_target ${Boost_LIBRARIES})
-  get_target_property(lib_location ${lib_target} LOCATION)
-  install(FILES ${lib_location} DESTINATION lib)
-endforeach()
+cmake_minimum_required(VERSION 3.28)
 
 project(rate_limiter)
 
