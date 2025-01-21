@@ -33,10 +33,10 @@ public:
 
 private:
   boost::mutex mtx_;
+  std::queue<SharedConnection, inner_vector> queue;
+
   int limit{INITIAL_LIMIT};
   int currSize{0};
-
-  std::queue<SharedConnection, inner_vector> queue;
 };
 
 #endif /* SRC_LEAKYBUCKET_H */
