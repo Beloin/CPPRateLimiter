@@ -12,6 +12,8 @@ public:
   Connection() = default;
   ~Connection() = default;
 
+  void proceed();
+  void abort();
 private:
 };
 
