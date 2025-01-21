@@ -1,4 +1,4 @@
-#include "LeakyBucketTimer.hpp"
+#include "LeakyBucketMiddleware.hpp"
 #include <boost/asio.hpp>
 #include <boost/asio/buffer.hpp>
 #include <boost/date_time/posix_time/posix_time_duration.hpp>
@@ -26,11 +26,11 @@
 //   timer.async_wait(tick);
 // }
 
-void LeakyBucketTimer::setup(int ms) {
+void LeakyBucketMiddleware::setup(int ms) {
   // No-op
 }
 
-void LeakyBucketTimer::tick() {
+void LeakyBucketMiddleware::tick() {
   // TODO: Check ms
   auto conn = queue.getConnection();
   if (conn == nullptr) {
@@ -39,7 +39,7 @@ void LeakyBucketTimer::tick() {
   conn->proceed();
 }
 
-void LeakyBucketTimer::addConnection(SharedConnection conn) {
+void LeakyBucketMiddleware::addConnection(SharedConnection conn) {
   bool accepted = queue.addConnection(conn);
   if (!accepted) {
     conn->abort();

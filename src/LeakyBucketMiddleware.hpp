@@ -8,13 +8,13 @@
 
 #include "LeakyBucketQueue.hpp"
 
-class LeakyBucketTimer {
+class LeakyBucketMiddleware {
 
 public:
-  LeakyBucketTimer(){
+  LeakyBucketMiddleware(){
 
   };
-  ~LeakyBucketTimer() = default;
+  ~LeakyBucketMiddleware() = default;
 
   void setup(int ms);
   void addConnection(SharedConnection);
