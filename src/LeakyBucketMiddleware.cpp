@@ -26,16 +26,14 @@
 //   timer.async_wait(tick);
 // }
 
-void LeakyBucketMiddleware::setup(int ms) {
-  // No-op
-}
-
 void LeakyBucketMiddleware::tick() {
   // TODO: Check ms
   auto conn = queue.getConnection();
   if (conn == nullptr) {
     return;
   }
+
+  // TODO: Test aborting all requests
   conn->proceed();
 }
 

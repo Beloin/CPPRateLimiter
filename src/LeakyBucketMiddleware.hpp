@@ -11,11 +11,11 @@
 class LeakyBucketMiddleware {
 
 public:
-  LeakyBucketMiddleware(){
-  };
+  LeakyBucketMiddleware() {};
+  LeakyBucketMiddleware(int ms) : ms_timer(ms) {};
+
   ~LeakyBucketMiddleware() = default;
 
-  void setup(int ms);
   void addConnection(SharedConnection);
 
   // TODO: Maybe focus only in the thing to do, not in the timer
@@ -34,6 +34,7 @@ public:
 
 private:
   LeakyBucketQueue queue{};
+  int ms_timer{100};
 };
 
 #endif /* SRC_LEAKYBUCKETTIMER_H */
