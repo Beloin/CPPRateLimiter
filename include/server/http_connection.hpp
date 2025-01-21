@@ -6,6 +6,7 @@
 #define INCLUDE_SERVER_HTTP_CONNECTION_H
 ////////////////////////////////////////////////////////////////////////////////
 
+#include "../src/Connection.hpp"
 #include <boost/asio.hpp>
 #include <boost/beast/core.hpp>
 #include <boost/beast/http.hpp>
@@ -24,7 +25,8 @@ namespace http = boost::beast::http;
 namespace Server {
 //------------------------------------------------------------------------------
 
-class HttpConnection : public std::enable_shared_from_this<HttpConnection> {
+class HttpConnection : public std::enable_shared_from_this<HttpConnection>,
+                       public Connection {
 
 public:
   HttpConnection(tcp::socket socket) : socket_(std::move(socket)) {}
@@ -35,6 +37,9 @@ public:
     read_request();
     check_deadline();
   }
+
+  void proceed() override;
+  void abort() override;
 
 private:
   // The socket for the currently connected client.

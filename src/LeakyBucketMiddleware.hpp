@@ -12,7 +12,6 @@ class LeakyBucketMiddleware {
 
 public:
   LeakyBucketMiddleware(){
-
   };
   ~LeakyBucketMiddleware() = default;
 
@@ -21,7 +20,7 @@ public:
 
   // TODO: Maybe focus only in the thing to do, not in the timer
   // So we can create the timer in the main class
-  void run();
+  // void run();
   // TODO: Or implement the "RateLimiter" here and make the timer in run,
   // Implement the RateLimiter and add the timer, so everytime we add a thing
   // here we can wait only for the timer. Actually the LeakyBucketQueue can be
