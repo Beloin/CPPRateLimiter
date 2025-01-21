@@ -9,12 +9,8 @@
 class Connection {
 
 public:
-  Connection() = default;
-  ~Connection() = default;
-
-  void proceed();
-  void abort();
-private:
+  virtual void proceed() = 0;
+  virtual void abort() = 0;
 };
 
 #endif /* SRC_CONNECTION_H */

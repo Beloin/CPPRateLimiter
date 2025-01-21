@@ -1,0 +1,23 @@
+////////////////////////////////////////////////////////////////////////////////
+// File:        LeakyBucketTimer.hpp
+// Author:      Beloin Rodrigues
+////////////////////////////////////////////////////////////////////////////////
+#ifndef SRC_LEAKYBUCKETTIMER_H
+#define SRC_LEAKYBUCKETTIMER_H
+////////////////////////////////////////////////////////////////////////////////
+
+class LeakyBucketTimer {
+
+public:
+  LeakyBucketTimer() = default;
+  ~LeakyBucketTimer() = default;
+
+  /**
+   * @brief Asyncronous run
+   */
+  void run(int milli);
+
+private:
+};
+
+#endif /* SRC_LEAKYBUCKETTIMER_H */

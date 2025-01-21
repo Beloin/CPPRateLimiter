@@ -1,8 +1,8 @@
-#include "LeakyBucket.hpp"
+#include "LeakyBucketQueue.hpp"
 #include <cstddef>
 #include <memory>
 
-bool LeakyBucket::addConnection(SharedConnection conn) {
+bool LeakyBucketQueue::addConnection(SharedConnection conn) {
   mtx_.lock();
   if (currSize + 1 > limit) {
     mtx_.unlock();
@@ -16,7 +16,7 @@ bool LeakyBucket::addConnection(SharedConnection conn) {
   return true;
 }
 
-SharedConnection LeakyBucket::getConnection() {
+SharedConnection LeakyBucketQueue::getConnection() {
   mtx_.lock();
   if (currSize == 0) {
     mtx_.unlock();

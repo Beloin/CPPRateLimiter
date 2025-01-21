@@ -6,26 +6,23 @@
 #define SRC_LEAKYBUCKET_H
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "Connection.hpp"
-#include <memory>
+#include "RateLimiter.hpp"
+#include <boost/thread/mutex.hpp>
 #include <queue>
 #include <vector>
-#include <boost/thread/mutex.hpp>
-
 
 #define INITIAL_LIMIT 10
 #define MAX_LIMIT 100
 
-using SharedConnection = std::shared_ptr<Connection>;
 using inner_vector = std::vector<SharedConnection>;
-class LeakyBucket {
+class LeakyBucketQueue : public RateLimiter {
 
 public:
-  LeakyBucket() = default;
-  ~LeakyBucket() = default;
+  LeakyBucketQueue() = default;
+  ~LeakyBucketQueue() = default;
 
-  bool addConnection(SharedConnection);
-  SharedConnection getConnection();
+  bool addConnection(SharedConnection) override;
+  SharedConnection getConnection() override;
 
   // TODO: Enable dynamic limits
   // bool increaseLimit(int);
