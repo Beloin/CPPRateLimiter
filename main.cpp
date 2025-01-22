@@ -1,5 +1,6 @@
 #include "server/http_connection.hpp"
 #include "src/LeakyBucketMiddleware.hpp"
+#include "src/Middleware.hpp"
 #include <boost/asio/ip/address.hpp>
 #include <boost/beast.hpp>
 #include <iostream>
@@ -15,27 +16,13 @@
 using tcp = boost::asio::ip::tcp;
 int runserver(int argc, char **argv);
 void http_server(tcp::acceptor &acceptor, tcp::socket &socket,
-                 LeakyBucketMiddleware &middleware);
+                 Middleware &middleware);
+void timer_tick(boost::asio::steady_timer &timer, boost::asio::io_context &io,
+                std::chrono::milliseconds interval, Middleware &middleware);
 
 int main(int argc, char *argv[]) {
   std::cout << "[server] Starting Server" << std::endl;
   return runserver(argc, argv);
-}
-
-void timer_tick(boost::asio::steady_timer &timer, boost::asio::io_context &io,
-                std::chrono::milliseconds interval,
-                LeakyBucketMiddleware &middleware) {
-  middleware.tick();
-
-  timer.expires_after(interval);
-  timer.async_wait([&timer, &io, interval,
-                    &middleware](const boost::system::error_code &ec) {
-    if (!ec) {
-      timer_tick(timer, io, interval, middleware);
-    } else if (ec != boost::asio::error::operation_aborted) {
-      std::cerr << "Timer error: " << ec.message() << '\n';
-    }
-  });
 }
 
 int runserver(int argc, char **argv) {
@@ -60,7 +47,7 @@ int runserver(int argc, char **argv) {
     tcp::socket socket{ioc};
     http_server(acceptor, socket, middleware);
 
-    std::chrono::milliseconds interval(1000); // 0.1 sec
+    std::chrono::milliseconds interval(100); // 0.1 sec
     boost::asio::steady_timer timer(ioc, interval);
     timer.async_wait([&timer, &ioc, interval,
                       &middleware](const boost::system::error_code &ec) {
@@ -80,7 +67,7 @@ int runserver(int argc, char **argv) {
 }
 
 void http_server(tcp::acceptor &acceptor, tcp::socket &socket,
-                 LeakyBucketMiddleware &middleware) {
+                 Middleware &middleware) {
   acceptor.async_accept(socket, [&](boost::beast::error_code ec) {
     if (!ec) {
       auto sharedConnection =
@@ -89,5 +76,20 @@ void http_server(tcp::acceptor &acceptor, tcp::socket &socket,
       // sharedConnection->start();
     }
     http_server(acceptor, socket, middleware);
+  });
+}
+
+void timer_tick(boost::asio::steady_timer &timer, boost::asio::io_context &io,
+                std::chrono::milliseconds interval, Middleware &middleware) {
+  middleware.tick();
+
+  timer.expires_after(interval);
+  timer.async_wait([&timer, &io, interval,
+                    &middleware](const boost::system::error_code &ec) {
+    if (!ec) {
+      timer_tick(timer, io, interval, middleware);
+    } else if (ec != boost::asio::error::operation_aborted) {
+      std::cerr << "Timer error: " << ec.message() << '\n';
+    }
   });
 }

@@ -9,7 +9,6 @@
 #include "RateLimiter.hpp"
 #include <boost/thread/mutex.hpp>
 #include <queue>
-#include <vector>
 
 #define INITIAL_LIMIT 10
 #define MAX_LIMIT 100
@@ -18,6 +17,7 @@ class LeakyBucketQueue : public RateLimiter {
 
 public:
   LeakyBucketQueue() = default;
+  LeakyBucketQueue(int limit) : limit(limit) {}
   ~LeakyBucketQueue() = default;
 
   bool addConnection(SharedConnection) override;

@@ -18,7 +18,6 @@
 #include <memory>
 #include <string>
 
-namespace ip = boost::asio::ip;
 using tcp = boost::asio::ip::tcp;
 namespace http = boost::beast::http;
 
@@ -68,6 +67,7 @@ private:
 
   // Asynchronously receive a complete request message.
   void read_request() {
+    // TODO: Create a callback?
     auto self = shared_from_this();
 
     http::async_read(
@@ -97,8 +97,6 @@ private:
       response_.result(http::status::bad_request);
       response_.set(http::field::content_type, "text/plain");
       boost::beast::ostream(response_.body())
-          // << "Invalid request-method '" <<
-          // request_.method_string().to_string()
           << "Invalid request-method '" << request_.method_string() << "'";
       break;
     }
@@ -108,14 +106,14 @@ private:
 
   // Construct a response message based on the program state.
   void create_response() {
-    if (request_.target() == "/count") {
+    if (request_.target() == "/hello") {
       response_.set(http::field::content_type, "text/html");
       boost::beast::ostream(response_.body())
           << "<html>\n"
-          << "<head><title>Request count</title></head>\n"
+          << "<head><title>Beast Hello World</title></head>\n"
           << "<body>\n"
-          << "<h1>Request count</h1>\n"
-          << "<p>There have been " << 12 << " requests so far.</p>\n"
+          << "<h1>Hello World</h1>\n"
+          << "<p>Hello World from C++ (Beast)</p>\n"
           << "</body>\n"
           << "</html>\n";
     } else if (request_.target() == "/time") {
