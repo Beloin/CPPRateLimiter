@@ -6,11 +6,14 @@
 #define SRC_CONNECTION_H
 ////////////////////////////////////////////////////////////////////////////////
 
+#include <string>
+
 class Connection {
 
 public:
   virtual void proceed() = 0;
   virtual void abort() = 0;
+  virtual std::string getAddr() = 0;
 };
 
 #endif /* SRC_CONNECTION_H */

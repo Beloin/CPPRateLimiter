@@ -1,6 +1,9 @@
 #include "server/http_connection.hpp"
+#include <iostream>
 
-void Server::HttpConnection::proceed() {}
+void Server::HttpConnection::proceed() {
+  start();
+}
 
 void Server::HttpConnection::abort() {
   response_.result(http::status::too_many_requests);

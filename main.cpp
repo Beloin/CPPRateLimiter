@@ -60,7 +60,7 @@ int runserver(int argc, char **argv) {
     tcp::socket socket{ioc};
     http_server(acceptor, socket, middleware);
 
-    std::chrono::milliseconds interval(100); // 0.1 sec
+    std::chrono::milliseconds interval(1000); // 0.1 sec
     boost::asio::steady_timer timer(ioc, interval);
     timer.async_wait([&timer, &ioc, interval,
                       &middleware](const boost::system::error_code &ec) {

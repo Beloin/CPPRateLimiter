@@ -31,7 +31,9 @@ class HttpConnection : public std::enable_shared_from_this<HttpConnection>,
 public:
   HttpConnection(tcp::socket socket) : socket_(std::move(socket)) {}
 
-  ~HttpConnection() = default;
+  ~HttpConnection() {
+    std::cout << "(HttpConnection) Connection Deleted" << std::endl;
+  }
 
   void start() {
     read_request();
@@ -40,6 +42,12 @@ public:
 
   void proceed() override;
   void abort() override;
+
+  std::string getAddr() override {
+    auto host = socket_.remote_endpoint().address().to_string();
+    auto port = socket_.remote_endpoint().port();
+    return host + ":" + std::to_string(port);
+  }
 
 private:
   // The socket for the currently connected client.
