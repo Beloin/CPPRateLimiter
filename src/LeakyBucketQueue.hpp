@@ -14,7 +14,6 @@
 #define INITIAL_LIMIT 10
 #define MAX_LIMIT 100
 
-using inner_vector = std::vector<SharedConnection>;
 class LeakyBucketQueue : public RateLimiter {
 
 public:
@@ -33,7 +32,7 @@ public:
 
 private:
   boost::mutex mtx_;
-  std::queue<SharedConnection, inner_vector> queue;
+  std::queue<SharedConnection> queue;
 
   int limit{INITIAL_LIMIT};
   int currSize{0};
