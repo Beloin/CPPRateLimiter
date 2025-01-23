@@ -7,6 +7,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "../Middleware.hpp"
+#include <stack>
+
 class SlidingWindowMiddleware : public Middleware {
 
 public:
@@ -17,6 +19,9 @@ public:
   void tick() override;
 
 private:
+  int requestPerSec{5};
+  // TODO: Add object in stack or something like this
+  std::stack<SharedConnection> stack;
 };
 
 #endif /* SRC_SLIDINGWINDOWMIDDLEWARE_H */
