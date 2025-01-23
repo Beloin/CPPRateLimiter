@@ -1,8 +1,8 @@
 #include "LeakyBucketMiddleware.hpp"
 #include <iostream>
 
+// TODO: Check ms
 void LeakyBucketMiddleware::tick() {
-  // TODO: Check ms
   auto conn = queue.getConnection();
   if (conn == nullptr) {
     return;

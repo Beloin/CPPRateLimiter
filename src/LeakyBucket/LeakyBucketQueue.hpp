@@ -6,7 +6,7 @@
 #define SRC_LEAKYBUCKET_H
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "RateLimiter.hpp"
+#include "../RateLimiter.hpp"
 #include <boost/thread/mutex.hpp>
 #include <queue>
 

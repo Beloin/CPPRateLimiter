@@ -7,8 +7,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "LeakyBucketQueue.hpp"
-#include "Middleware.hpp"
+#include "../Middleware.hpp"
 
+// TODO: Join with Queue, so it its only one
 class LeakyBucketMiddleware : public Middleware {
 
 public:

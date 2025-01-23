@@ -1,5 +1,5 @@
 #include "server/http_connection.hpp"
-#include "src/LeakyBucketMiddleware.hpp"
+#include "src/LeakyBucket/LeakyBucketMiddleware.hpp"
 #include "src/Middleware.hpp"
 #include <boost/asio/ip/address.hpp>
 #include <boost/beast.hpp>
@@ -73,7 +73,6 @@ void http_server(tcp::acceptor &acceptor, tcp::socket &socket,
       auto sharedConnection =
           std::make_shared<Server::HttpConnection>(std::move(socket));
       middleware.addConnection(sharedConnection);
-      // sharedConnection->start();
     }
     http_server(acceptor, socket, middleware);
   });
