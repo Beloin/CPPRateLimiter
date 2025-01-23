@@ -6,7 +6,7 @@
 #define SRC_SLIDINGWINDOWMIDDLEWARE_H
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "Middleware.hpp"
+#include "../Middleware.hpp"
 class SlidingWindowMiddleware : public Middleware {
 
 public:
