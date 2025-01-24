@@ -7,6 +7,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "../Middleware.hpp"
+#include <boost/thread/pthread/mutex.hpp>
 #include <chrono>
 #include <ctime>
 #include <queue>
@@ -31,6 +32,7 @@ private:
   int requestPerPeriod{5};
   int msPeriod{100};
 
+  boost::mutex mut;
   std::queue<TimedInfo> requestsQueue;
 
   void removeOutdated();

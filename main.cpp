@@ -28,9 +28,9 @@ int main(int argc, char *argv[]) {
 
 int runserver(int argc, char **argv) {
   LeakyBucketMiddleware leakyMiddleware{10};
-  SlidingWindowMiddleware slidingMiddleware{5, 100};
+  SlidingWindowMiddleware slidingMiddleware{5, 5000};
 
-  LeakyBucketMiddleware& middleware = leakyMiddleware;
+  Middleware& middleware = slidingMiddleware;
   try {
     // Check command line arguments.
     if (argc != 3) {
