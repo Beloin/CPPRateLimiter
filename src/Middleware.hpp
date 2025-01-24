@@ -6,7 +6,8 @@
 #define SRC_MIDDLEWARE_H
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "RateLimiter.hpp"
+
+#include "Connection.hpp"
 
 class Middleware {
 

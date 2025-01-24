@@ -6,22 +6,22 @@
 #define SRC_LEAKYBUCKET_H
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "../RateLimiter.hpp"
 #include <boost/thread/mutex.hpp>
 #include <queue>
+#include "../Connection.hpp"
 
 #define INITIAL_LIMIT 10
 #define MAX_LIMIT 100
 
-class LeakyBucketQueue : public RateLimiter {
+class LeakyBucketQueue {
 
 public:
   LeakyBucketQueue() = default;
   LeakyBucketQueue(int limit) : limit(limit) {}
   ~LeakyBucketQueue() = default;
 
-  bool addConnection(SharedConnection) override;
-  SharedConnection getConnection() override;
+  bool addConnection(SharedConnection);
+  SharedConnection getConnection();
 
   // TODO: Enable dynamic limits
   // bool increaseLimit(int);
