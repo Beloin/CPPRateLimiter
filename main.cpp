@@ -1,6 +1,7 @@
 #include "server/http_connection.hpp"
 #include "src/LeakyBucket/LeakyBucketMiddleware.hpp"
 #include "src/Middleware.hpp"
+#include "src/SlidingWindow/SlidingWindowMiddleware.hpp"
 #include <boost/asio/ip/address.hpp>
 #include <boost/beast.hpp>
 #include <iostream>
@@ -26,7 +27,10 @@ int main(int argc, char *argv[]) {
 }
 
 int runserver(int argc, char **argv) {
-  LeakyBucketMiddleware middleware{};
+  LeakyBucketMiddleware leakyMiddleware{10};
+  SlidingWindowMiddleware slidingMiddleware{5, 100};
+
+  LeakyBucketMiddleware& middleware = leakyMiddleware;
   try {
     // Check command line arguments.
     if (argc != 3) {

@@ -6,16 +6,15 @@
 #define SRC_LEAKYBUCKETTIMER_H
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "LeakyBucketQueue.hpp"
 #include "../Middleware.hpp"
+#include "LeakyBucketQueue.hpp"
 
 // TODO: Join with Queue, so it its only one
 class LeakyBucketMiddleware : public Middleware {
 
 public:
   LeakyBucketMiddleware() {};
-  LeakyBucketMiddleware(int ms, int limit)
-      : ms_timer(ms), queue(LeakyBucketQueue(limit)) {};
+  LeakyBucketMiddleware(int limit) : queue(LeakyBucketQueue(limit)) {};
 
   ~LeakyBucketMiddleware() = default;
 
@@ -25,7 +24,6 @@ public:
 
 private:
   LeakyBucketQueue queue{};
-  int ms_timer{100};
 };
 
 #endif /* SRC_LEAKYBUCKETTIMER_H */

@@ -11,7 +11,14 @@
 class Connection {
 
 public:
+  /**
+   * @brief Async proceed
+   */
   virtual void proceed() = 0;
+
+  /**
+   * @brief Async abort
+   */
   virtual void abort() = 0;
   virtual std::string getAddr() = 0;
 };
