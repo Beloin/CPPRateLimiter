@@ -7,14 +7,17 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "../Middleware.hpp"
-#include "LeakyBucketQueue.hpp"
+#include <boost/thread/pthread/mutex.hpp>
+#include <queue>
 
-// TODO: Join with Queue, so it its only one
+#define INITIAL_LIMIT 10
+#define MAX_LIMIT 100
+
 class LeakyBucketMiddleware : public Middleware {
 
 public:
   LeakyBucketMiddleware() {};
-  LeakyBucketMiddleware(int limit) : queue(LeakyBucketQueue(limit)) {};
+  LeakyBucketMiddleware(int limit) : limit(limit) {};
 
   ~LeakyBucketMiddleware() = default;
 
@@ -23,7 +26,14 @@ public:
   void tick() override;
 
 private:
-  LeakyBucketQueue queue{};
+  SharedConnection getConnection();
+  bool addConnectionToQueue(SharedConnection);
+
+  boost::mutex mtx_;
+  std::queue<SharedConnection> queue;
+
+  int limit{INITIAL_LIMIT};
+  int currSize{0};
 };
 
 #endif /* SRC_LEAKYBUCKETTIMER_H */

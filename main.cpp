@@ -28,9 +28,9 @@ int main(int argc, char *argv[]) {
 
 int runserver(int argc, char **argv) {
   LeakyBucketMiddleware leakyMiddleware{10};
-  SlidingWindowMiddleware slidingMiddleware{5, 5000};
+  SlidingWindowMiddleware slidingMiddleware{5, 500};
 
-  Middleware& middleware = leakyMiddleware;
+  Middleware& middleware = slidingMiddleware;
   try {
     // Check command line arguments.
     if (argc != 3) {
@@ -51,7 +51,7 @@ int runserver(int argc, char **argv) {
     tcp::socket socket{ioc};
     http_server(acceptor, socket, middleware);
 
-    std::chrono::milliseconds interval(1000); // 0.1 sec
+    std::chrono::milliseconds interval(100); // 0.1 sec
     boost::asio::steady_timer timer(ioc, interval);
     timer.async_wait([&timer, &ioc, interval,
                       &middleware](const boost::system::error_code &ec) {
